@@ -4,11 +4,25 @@ namespace AppBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class DefaultController extends Controller
 {
+    /**
+     * @Route("/test", name="test")
+     */
+    public function testAction()
+    {
+        /*$array = ['ljnergzr', 9, 765=> 'zegzegr'];
+
+        return new JsonResponse($array);*/
+
+        return $this->render('default/index.html.twig');
+        return new Response($this->renderView('default/index.html.twig'));
+    }
+
     /**
      * @Route(
      *      "/article-{year}/{id}/comments/{page}",
