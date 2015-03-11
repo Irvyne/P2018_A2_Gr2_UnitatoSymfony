@@ -21,19 +21,21 @@ class TrainerController extends Controller
      * Lists all Trainer entities.
      *
      * @Route("/", name="trainer")
-     *
      * @Method("GET")
-     * @Template()
      */
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('AppBundle:Trainer')->findAll();
+        $trainers = $em->getRepository('AppBundle:Trainer')->findAll();
 
-        return array(
-            'entities' => $entities,
-        );
+        // MonBundle:DossierDansViews:Fichier
+
+        // "AppBundle:" => src/AppBundle/Resources/views
+
+        return $this->render('AppBundle:Trainer:index.html.twig', [
+            'trainers' => $trainers,
+        ]);
     }
     /**
      * Creates a new Trainer entity.

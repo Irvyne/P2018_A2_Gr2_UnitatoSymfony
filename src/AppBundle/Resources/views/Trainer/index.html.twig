@@ -2,7 +2,25 @@
 
 {% block body -%}
     <h1>Trainer list</h1>
-
+    <section class="row">
+        {% for trainer in trainers %}
+            <article class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                {% if trainer.picture %}
+                    <figure>
+                        <img src="{{ trainer.picture }}" alt="{{ trainer.name }}">
+                        <figcaption>
+                            <h1>{{ trainer.name }}</h1>
+                        </figcaption>
+                    </figure>
+                {% else %}
+                    <h1>{{ trainer.name }}</h1>
+                {% endif %}
+                <p>{{ trainer.birthday|date }}</p>
+                <p>{{ trainer.description }}</p>
+            </article>
+        {% endfor %}
+    </section>
+    {#
     <table class="records_list">
         <thead>
             <tr>
@@ -46,4 +64,5 @@
             </a>
         </li>
     </ul>
-    {% endblock %}
+    #}
+{% endblock %}
