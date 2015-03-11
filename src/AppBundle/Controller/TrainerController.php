@@ -17,11 +17,11 @@ use AppBundle\Form\TrainerType;
  */
 class TrainerController extends Controller
 {
-
     /**
      * Lists all Trainer entities.
      *
      * @Route("/", name="trainer")
+     *
      * @Method("GET")
      * @Template()
      */
@@ -39,6 +39,7 @@ class TrainerController extends Controller
      * Creates a new Trainer entity.
      *
      * @Route("/", name="trainer_create")
+     *
      * @Method("POST")
      * @Template("AppBundle:Trainer:new.html.twig")
      */
@@ -85,6 +86,7 @@ class TrainerController extends Controller
      * Displays a form to create a new Trainer entity.
      *
      * @Route("/new", name="trainer_new")
+     *
      * @Method("GET")
      * @Template()
      */
@@ -103,6 +105,7 @@ class TrainerController extends Controller
      * Finds and displays a Trainer entity.
      *
      * @Route("/{id}", name="trainer_show")
+     *
      * @Method("GET")
      * @Template()
      */
@@ -128,6 +131,7 @@ class TrainerController extends Controller
      * Displays a form to edit an existing Trainer entity.
      *
      * @Route("/{id}/edit", name="trainer_edit")
+     *
      * @Method("GET")
      * @Template()
      */
@@ -152,12 +156,12 @@ class TrainerController extends Controller
     }
 
     /**
-    * Creates a form to edit a Trainer entity.
-    *
-    * @param Trainer $entity The entity
-    *
-    * @return \Symfony\Component\Form\Form The form
-    */
+     * Creates a form to edit a Trainer entity.
+     *
+     * @param Trainer $entity The entity
+     *
+     * @return \Symfony\Component\Form\Form The form
+     */
     private function createEditForm(Trainer $entity)
     {
         $form = $this->createForm(new TrainerType(), $entity, array(
@@ -173,6 +177,7 @@ class TrainerController extends Controller
      * Edits an existing Trainer entity.
      *
      * @Route("/{id}", name="trainer_update")
+     *
      * @Method("PUT")
      * @Template("AppBundle:Trainer:edit.html.twig")
      */
@@ -206,6 +211,7 @@ class TrainerController extends Controller
      * Deletes a Trainer entity.
      *
      * @Route("/{id}", name="trainer_delete")
+     *
      * @Method("DELETE")
      */
     public function deleteAction(Request $request, $id)

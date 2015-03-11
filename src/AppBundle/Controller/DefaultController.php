@@ -20,6 +20,7 @@ class DefaultController extends Controller
         return new JsonResponse($array);*/
 
         return $this->render('default/index.html.twig');
+
         return new Response($this->renderView('default/index.html.twig'));
     }
 

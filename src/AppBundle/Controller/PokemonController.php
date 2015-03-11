@@ -17,11 +17,11 @@ use AppBundle\Form\PokemonType;
  */
 class PokemonController extends Controller
 {
-
     /**
      * Lists all Pokemon entities.
      *
      * @Route("/", name="pokemon")
+     *
      * @Method("GET")
      * @Template()
      */
@@ -39,6 +39,7 @@ class PokemonController extends Controller
      * Creates a new Pokemon entity.
      *
      * @Route("/", name="pokemon_create")
+     *
      * @Method("POST")
      * @Template("AppBundle:Pokemon:new.html.twig")
      */
@@ -85,6 +86,7 @@ class PokemonController extends Controller
      * Displays a form to create a new Pokemon entity.
      *
      * @Route("/new", name="pokemon_new")
+     *
      * @Method("GET")
      * @Template()
      */
@@ -103,6 +105,7 @@ class PokemonController extends Controller
      * Finds and displays a Pokemon entity.
      *
      * @Route("/{id}", name="pokemon_show")
+     *
      * @Method("GET")
      * @Template()
      */
@@ -128,6 +131,7 @@ class PokemonController extends Controller
      * Displays a form to edit an existing Pokemon entity.
      *
      * @Route("/{id}/edit", name="pokemon_edit")
+     *
      * @Method("GET")
      * @Template()
      */
@@ -152,12 +156,12 @@ class PokemonController extends Controller
     }
 
     /**
-    * Creates a form to edit a Pokemon entity.
-    *
-    * @param Pokemon $entity The entity
-    *
-    * @return \Symfony\Component\Form\Form The form
-    */
+     * Creates a form to edit a Pokemon entity.
+     *
+     * @param Pokemon $entity The entity
+     *
+     * @return \Symfony\Component\Form\Form The form
+     */
     private function createEditForm(Pokemon $entity)
     {
         $form = $this->createForm(new PokemonType(), $entity, array(
@@ -173,6 +177,7 @@ class PokemonController extends Controller
      * Edits an existing Pokemon entity.
      *
      * @Route("/{id}", name="pokemon_update")
+     *
      * @Method("PUT")
      * @Template("AppBundle:Pokemon:edit.html.twig")
      */
@@ -206,6 +211,7 @@ class PokemonController extends Controller
      * Deletes a Pokemon entity.
      *
      * @Route("/{id}", name="pokemon_delete")
+     *
      * @Method("DELETE")
      */
     public function deleteAction(Request $request, $id)

@@ -5,7 +5,7 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Type
+ * Type.
  *
  * @ORM\Entity(repositoryClass="AppBundle\Entity\TypeRepository")
  * @ORM\Table(name="type")
@@ -28,11 +28,10 @@ class Type
      */
     private $name;
 
-
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -40,9 +39,10 @@ class Type
     }
 
     /**
-     * Set name
+     * Set name.
      *
      * @param string $name
+     *
      * @return Type
      */
     public function setName($name)
@@ -53,11 +53,19 @@ class Type
     }
 
     /**
-     * Get name
+     * Get name.
      *
-     * @return string 
+     * @return string
      */
     public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString()
     {
         return $this->name;
     }

@@ -5,7 +5,7 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Trainer.
+ * Trainer
  *
  * @ORM\Entity(repositoryClass="AppBundle\Entity\TrainerRepository")
  * @ORM\Table(name="trainer")
@@ -56,13 +56,13 @@ class Trainer
      */
     private $description;
 
-    const SEX_FEMALE = false;
-    const SEX_MALE   = true;
+    const SEX_FEMALE = 0;
+    const SEX_MALE   = 1;
 
     /**
-     * Get id.
+     * Get id
      *
-     * @return integer
+     * @return integer 
      */
     public function getId()
     {
@@ -70,10 +70,9 @@ class Trainer
     }
 
     /**
-     * Set name.
+     * Set name
      *
      * @param string $name
-     *
      * @return Trainer
      */
     public function setName($name)
@@ -84,9 +83,9 @@ class Trainer
     }
 
     /**
-     * Get name.
+     * Get name
      *
-     * @return string
+     * @return string 
      */
     public function getName()
     {
@@ -94,10 +93,9 @@ class Trainer
     }
 
     /**
-     * Set birthday.
+     * Set birthday
      *
      * @param \DateTime $birthday
-     *
      * @return Trainer
      */
     public function setBirthday($birthday)
@@ -108,9 +106,9 @@ class Trainer
     }
 
     /**
-     * Get birthday.
+     * Get birthday
      *
-     * @return \DateTime
+     * @return \DateTime 
      */
     public function getBirthday()
     {
@@ -118,10 +116,9 @@ class Trainer
     }
 
     /**
-     * Set sex.
+     * Set sex
      *
      * @param boolean $sex
-     *
      * @return Trainer
      */
     public function setSex($sex)
@@ -132,9 +129,9 @@ class Trainer
     }
 
     /**
-     * Get sex.
+     * Get sex
      *
-     * @return boolean
+     * @return boolean 
      */
     public function getSex()
     {
@@ -142,10 +139,9 @@ class Trainer
     }
 
     /**
-     * Set picture.
+     * Set picture
      *
      * @param string $picture
-     *
      * @return Trainer
      */
     public function setPicture($picture)
@@ -156,44 +152,12 @@ class Trainer
     }
 
     /**
-     * Get picture.
+     * Get picture
      *
-     * @return string
+     * @return string 
      */
     public function getPicture()
     {
         return $this->picture;
-    }
-
-    /**
-     * Set description.
-     *
-     * @param string $description
-     *
-     * @return Trainer
-     */
-    public function setDescription($description)
-    {
-        $this->description = $description;
-
-        return $this;
-    }
-
-    /**
-     * Get description.
-     *
-     * @return string
-     */
-    public function getDescription()
-    {
-        return $this->description;
-    }
-
-    /**
-     * @return string
-     */
-    public function __toString()
-    {
-        return $this->name;
     }
 }

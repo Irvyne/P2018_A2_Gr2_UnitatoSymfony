@@ -10,7 +10,7 @@ class PokemonType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
-     * @param array $options
+     * @param array                $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -21,18 +21,21 @@ class PokemonType extends AbstractType
             ->add('attack')
             ->add('defense')
             ->add('description')
-            ->add('types')
+            ->add('types', null, [
+                'multiple' => true,
+                'expanded' => true,
+            ])
             ->add('trainer')
         ;
     }
-    
+
     /**
      * @param OptionsResolverInterface $resolver
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\Pokemon'
+            'data_class' => 'AppBundle\Entity\Pokemon',
         ));
     }
 

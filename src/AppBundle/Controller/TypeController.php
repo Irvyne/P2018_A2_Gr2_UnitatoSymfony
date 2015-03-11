@@ -17,11 +17,11 @@ use AppBundle\Form\TypeType;
  */
 class TypeController extends Controller
 {
-
     /**
      * Lists all Type entities.
      *
      * @Route("/", name="type")
+     *
      * @Method("GET")
      * @Template()
      */
@@ -39,6 +39,7 @@ class TypeController extends Controller
      * Creates a new Type entity.
      *
      * @Route("/", name="type_create")
+     *
      * @Method("POST")
      * @Template("AppBundle:Type:new.html.twig")
      */
@@ -85,6 +86,7 @@ class TypeController extends Controller
      * Displays a form to create a new Type entity.
      *
      * @Route("/new", name="type_new")
+     *
      * @Method("GET")
      * @Template()
      */
@@ -103,6 +105,7 @@ class TypeController extends Controller
      * Finds and displays a Type entity.
      *
      * @Route("/{id}", name="type_show")
+     *
      * @Method("GET")
      * @Template()
      */
@@ -128,6 +131,7 @@ class TypeController extends Controller
      * Displays a form to edit an existing Type entity.
      *
      * @Route("/{id}/edit", name="type_edit")
+     *
      * @Method("GET")
      * @Template()
      */
@@ -152,12 +156,12 @@ class TypeController extends Controller
     }
 
     /**
-    * Creates a form to edit a Type entity.
-    *
-    * @param Type $entity The entity
-    *
-    * @return \Symfony\Component\Form\Form The form
-    */
+     * Creates a form to edit a Type entity.
+     *
+     * @param Type $entity The entity
+     *
+     * @return \Symfony\Component\Form\Form The form
+     */
     private function createEditForm(Type $entity)
     {
         $form = $this->createForm(new TypeType(), $entity, array(
@@ -173,6 +177,7 @@ class TypeController extends Controller
      * Edits an existing Type entity.
      *
      * @Route("/{id}", name="type_update")
+     *
      * @Method("PUT")
      * @Template("AppBundle:Type:edit.html.twig")
      */
@@ -206,6 +211,7 @@ class TypeController extends Controller
      * Deletes a Type entity.
      *
      * @Route("/{id}", name="type_delete")
+     *
      * @Method("DELETE")
      */
     public function deleteAction(Request $request, $id)

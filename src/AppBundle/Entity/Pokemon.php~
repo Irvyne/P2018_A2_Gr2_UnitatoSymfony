@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * Pokemon.
+ * Pokemon
  *
  * @ORM\Entity(repositoryClass="AppBundle\Entity\PokemonRepository")
  * @ORM\Table(name="pokemon")
@@ -78,8 +78,9 @@ class Pokemon
      */
     private $trainer;
 
+
     /**
-     * Constructor.
+     * Constructor
      */
     public function __construct()
     {
@@ -87,7 +88,7 @@ class Pokemon
     }
 
     /**
-     * Get id.
+     * Get id
      *
      * @return integer
      */
@@ -97,10 +98,9 @@ class Pokemon
     }
 
     /**
-     * Set name.
+     * Set name
      *
      * @param string $name
-     *
      * @return Pokemon
      */
     public function setName($name)
@@ -111,7 +111,7 @@ class Pokemon
     }
 
     /**
-     * Get name.
+     * Get name
      *
      * @return string
      */
@@ -121,10 +121,9 @@ class Pokemon
     }
 
     /**
-     * Set hp.
+     * Set hp
      *
      * @param integer $hp
-     *
      * @return Pokemon
      */
     public function setHp($hp)
@@ -135,7 +134,7 @@ class Pokemon
     }
 
     /**
-     * Get hp.
+     * Get hp
      *
      * @return integer
      */
@@ -145,10 +144,9 @@ class Pokemon
     }
 
     /**
-     * Set level.
+     * Set level
      *
      * @param integer $level
-     *
      * @return Pokemon
      */
     public function setLevel($level)
@@ -159,7 +157,7 @@ class Pokemon
     }
 
     /**
-     * Get level.
+     * Get level
      *
      * @return integer
      */
@@ -169,10 +167,9 @@ class Pokemon
     }
 
     /**
-     * Set attack.
+     * Set attack
      *
      * @param integer $attack
-     *
      * @return Pokemon
      */
     public function setAttack($attack)
@@ -183,7 +180,7 @@ class Pokemon
     }
 
     /**
-     * Get attack.
+     * Get attack
      *
      * @return integer
      */
@@ -193,10 +190,9 @@ class Pokemon
     }
 
     /**
-     * Set defense.
+     * Set defense
      *
      * @param integer $defense
-     *
      * @return Pokemon
      */
     public function setDefense($defense)
@@ -207,7 +203,7 @@ class Pokemon
     }
 
     /**
-     * Get defense.
+     * Get defense
      *
      * @return integer
      */
@@ -217,10 +213,9 @@ class Pokemon
     }
 
     /**
-     * Set description.
+     * Set description
      *
      * @param string $description
-     *
      * @return Pokemon
      */
     public function setDescription($description)
@@ -230,7 +225,7 @@ class Pokemon
         return $this;
     }
     /**
-     * Get description.
+     * Get description
      *
      * @return string
      */
@@ -240,10 +235,9 @@ class Pokemon
     }
 
     /**
-     * Add types.
+     * Add types
      *
      * @param Type $types
-     *
      * @return Pokemon
      */
     public function addType(Type $types)
@@ -254,7 +248,7 @@ class Pokemon
     }
 
     /**
-     * Remove types.
+     * Remove types
      *
      * @param Type $types
      */
@@ -264,44 +258,12 @@ class Pokemon
     }
 
     /**
-     * Get types.
+     * Get types
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return \Doctrine\Common\Collections\Collection 
      */
     public function getTypes()
     {
         return $this->types;
-    }
-
-    /**
-     * Set trainer.
-     *
-     * @param Trainer $trainer
-     *
-     * @return Pokemon
-     */
-    public function setTrainer(Trainer $trainer = null)
-    {
-        $this->trainer = $trainer;
-
-        return $this;
-    }
-
-    /**
-     * Get trainer.
-     *
-     * @return Trainer
-     */
-    public function getTrainer()
-    {
-        return $this->trainer;
-    }
-
-    /**
-     * @return string
-     */
-    public function __toString()
-    {
-        return $this->name;
     }
 }
