@@ -5,16 +5,12 @@
     <section class="row">
         {% for trainer in trainers %}
             <article class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
-                {% if trainer.picture %}
-                    <figure>
-                        <img src="{{ trainer.picture }}" alt="{{ trainer.name }}">
-                        <figcaption>
-                            <h1>{{ trainer.name }}</h1>
-                        </figcaption>
-                    </figure>
-                {% else %}
-                    <h1>{{ trainer.name }}</h1>
-                {% endif %}
+                <figure>
+                    <img src="{{ trainer.picture|default(asset('bundles/app/img/default-trainer.jpg')) }}" alt="{{ trainer.name }}">
+                    <figcaption>
+                        <h1>{{ trainer.name }}</h1>
+                    </figcaption>
+                </figure>
                 <p>{{ trainer.birthday|date }}</p>
                 <p>{{ trainer.description }}</p>
             </article>
