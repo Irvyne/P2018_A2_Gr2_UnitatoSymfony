@@ -40,15 +40,20 @@ class TrainerController extends Controller
     /**
      * Creates a new Trainer entity.
      *
-     * @Route("/", name="trainer_create")
+     * @Route("/create", name="trainer_create")
      *
-     * @Method("POST")
-     * @Template("AppBundle:Trainer:new.html.twig")
+     * @Method("GET|POST")
      */
     public function createAction(Request $request)
     {
         $entity = new Trainer();
-        $form = $this->createCreateForm($entity);
+
+        $form = $this->createForm(new TrainerType(), $entity, array(
+            'action' => $this->generateUrl('trainer_create'),
+            'method' => 'POST',
+        ));
+        $form->add('submit', 'submit', array('label' => 'Create'));
+
         $form->handleRequest($request);
 
         if ($form->isValid()) {
@@ -59,48 +64,10 @@ class TrainerController extends Controller
             return $this->redirect($this->generateUrl('trainer_show', array('id' => $entity->getId())));
         }
 
-        return array(
+        return $this->render('AppBundle:Trainer:new.html.twig', [
             'entity' => $entity,
             'form'   => $form->createView(),
-        );
-    }
-
-    /**
-     * Creates a form to create a Trainer entity.
-     *
-     * @param Trainer $entity The entity
-     *
-     * @return \Symfony\Component\Form\Form The form
-     */
-    private function createCreateForm(Trainer $entity)
-    {
-        $form = $this->createForm(new TrainerType(), $entity, array(
-            'action' => $this->generateUrl('trainer_create'),
-            'method' => 'POST',
-        ));
-
-        $form->add('submit', 'submit', array('label' => 'Create'));
-
-        return $form;
-    }
-
-    /**
-     * Displays a form to create a new Trainer entity.
-     *
-     * @Route("/new", name="trainer_new")
-     *
-     * @Method("GET")
-     * @Template()
-     */
-    public function newAction()
-    {
-        $entity = new Trainer();
-        $form   = $this->createCreateForm($entity);
-
-        return array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
-        );
+        ]);
     }
 
     /**
@@ -130,58 +97,11 @@ class TrainerController extends Controller
     }
 
     /**
-     * Displays a form to edit an existing Trainer entity.
-     *
-     * @Route("/{id}/edit", name="trainer_edit")
-     *
-     * @Method("GET")
-     * @Template()
-     */
-    public function editAction($id)
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('AppBundle:Trainer')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Trainer entity.');
-        }
-
-        $editForm = $this->createEditForm($entity);
-        $deleteForm = $this->createDeleteForm($id);
-
-        return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        );
-    }
-
-    /**
-     * Creates a form to edit a Trainer entity.
-     *
-     * @param Trainer $entity The entity
-     *
-     * @return \Symfony\Component\Form\Form The form
-     */
-    private function createEditForm(Trainer $entity)
-    {
-        $form = $this->createForm(new TrainerType(), $entity, array(
-            'action' => $this->generateUrl('trainer_update', array('id' => $entity->getId())),
-            'method' => 'PUT',
-        ));
-
-        $form->add('submit', 'submit', array('label' => 'Update'));
-
-        return $form;
-    }
-    /**
      * Edits an existing Trainer entity.
      *
-     * @Route("/{id}", name="trainer_update")
+     * @Route("/update/{id}", name="trainer_update")
      *
-     * @Method("PUT")
-     * @Template("AppBundle:Trainer:edit.html.twig")
+     * @Method("GET|PUT")
      */
     public function updateAction(Request $request, $id)
     {
@@ -194,21 +114,28 @@ class TrainerController extends Controller
         }
 
         $deleteForm = $this->createDeleteForm($id);
-        $editForm = $this->createEditForm($entity);
+
+        $editForm = $this->createForm(new TrainerType(), $entity, array(
+            'action' => $this->generateUrl('trainer_update', array('id' => $entity->getId())),
+            'method' => 'PUT',
+        ));
+        $editForm->add('submit', 'submit', array('label' => 'Update'));
+
         $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
             $em->flush();
 
-            return $this->redirect($this->generateUrl('trainer_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('trainer_show', array('id' => $id)));
         }
 
-        return array(
+        return $this->render('AppBundle:Trainer:edit.html.twig', [
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
-        );
+        ]);
     }
+
     /**
      * Deletes a Trainer entity.
      *

@@ -6,15 +6,31 @@
         {% for trainer in trainers %}
             <article class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
                 <figure>
-                    <img src="{{ trainer.picture|default(asset('bundles/app/img/default-trainer.jpg')) }}" alt="{{ trainer.name }}">
+                    <img class="img-responsive" src="{{ trainer.picture|default(asset('bundles/app/img/default-trainer.jpg')) }}" alt="{{ trainer.name }}">
                     <figcaption>
                         <h1>{{ trainer.name }}</h1>
                     </figcaption>
                 </figure>
                 <p>{{ trainer.birthday|date }}</p>
                 <p>{{ trainer.description }}</p>
+                <aside class="btn-group" role="group">
+                    <a class="btn btn-primary" href="{{ url('trainer_show', {'id': trainer.id}) }}">
+                        <span class="glyphicon glyphicon-eye-open"></span>
+                        Show
+                    </a>
+                    <a class="btn btn-warning" href="{{ url('trainer_update', {'id': trainer.id}) }}">
+                        <span class="glyphicon glyphicon-edit"></span>
+                        Edit
+                    </a>
+                </aside>
             </article>
         {% endfor %}
+        <aside class="text-center">
+            <a class="btn btn-primary" href="{{ url('trainer_create') }}">
+                <span class="glyphicon glyphicon-plus-sign"></span>
+                Add
+            </a>
+        </aside>
     </section>
     {#
     <table class="records_list">
@@ -44,7 +60,7 @@
                         <a href="{{ path('trainer_show', { 'id': entity.id }) }}">show</a>
                     </li>
                     <li>
-                        <a href="{{ path('trainer_edit', { 'id': entity.id }) }}">edit</a>
+                        <a href="{{ path('trainer_update', { 'id': entity.id }) }}">edit</a>
                     </li>
                 </ul>
                 </td>
@@ -55,7 +71,7 @@
 
         <ul>
         <li>
-            <a href="{{ path('trainer_new') }}">
+            <a href="{{ path('trainer_create') }}">
                 Create a new entry
             </a>
         </li>
