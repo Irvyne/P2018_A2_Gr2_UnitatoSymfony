@@ -23,82 +23,49 @@ class PokemonController extends Controller
      * @Route("/", name="pokemon")
      *
      * @Method("GET")
-     * @Template()
      */
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('AppBundle:Pokemon')->findAll();
+        $pokemons = $em->getRepository('AppBundle:Pokemon')->findAll();
 
-        return array(
-            'entities' => $entities,
-        );
+        return $this->render('AppBundle:Pokemon:index.html.twig', [
+            'pokemons' => $pokemons,
+        ]);
     }
     /**
      * Creates a new Pokemon entity.
      *
-     * @Route("/", name="pokemon_create")
+     * @Route("/create", name="pokemon_create")
      *
-     * @Method("POST")
-     * @Template("AppBundle:Pokemon:new.html.twig")
+     * @Method("GET|POST")
      */
     public function createAction(Request $request)
     {
-        $entity = new Pokemon();
-        $form = $this->createCreateForm($entity);
-        $form->handleRequest($request);
+        $pokemon = new Pokemon();
 
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($entity);
-            $em->flush();
-
-            return $this->redirect($this->generateUrl('pokemon_show', array('id' => $entity->getId())));
-        }
-
-        return array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
-        );
-    }
-
-    /**
-     * Creates a form to create a Pokemon entity.
-     *
-     * @param Pokemon $entity The entity
-     *
-     * @return \Symfony\Component\Form\Form The form
-     */
-    private function createCreateForm(Pokemon $entity)
-    {
-        $form = $this->createForm(new PokemonType(), $entity, array(
+        $form = $this->createForm(new PokemonType(), $pokemon, array(
             'action' => $this->generateUrl('pokemon_create'),
             'method' => 'POST',
         ));
 
         $form->add('submit', 'submit', array('label' => 'Create'));
 
-        return $form;
-    }
+        $form->handleRequest($request);
 
-    /**
-     * Displays a form to create a new Pokemon entity.
-     *
-     * @Route("/new", name="pokemon_new")
-     *
-     * @Method("GET")
-     * @Template()
-     */
-    public function newAction()
-    {
-        $entity = new Pokemon();
-        $form   = $this->createCreateForm($entity);
+        if ($form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($pokemon);
+            $em->flush();
 
-        return array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
-        );
+            return $this->redirect($this->generateUrl('pokemon_show', array('id' => $pokemon->getId())));
+        }
+
+        return $this->render('AppBundle:Pokemon:new.html.twig', [
+            'pokemon' => $pokemon,
+            'form'    => $form->createView(),
+        ]);
     }
 
     /**
@@ -107,106 +74,66 @@ class PokemonController extends Controller
      * @Route("/{id}", name="pokemon_show")
      *
      * @Method("GET")
-     * @Template()
      */
     public function showAction($id)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('AppBundle:Pokemon')->find($id);
+        $pokemon = $em->getRepository('AppBundle:Pokemon')->find($id);
 
-        if (!$entity) {
+        if (!$pokemon) {
             throw $this->createNotFoundException('Unable to find Pokemon entity.');
         }
 
         $deleteForm = $this->createDeleteForm($id);
 
-        return array(
-            'entity'      => $entity,
+        return $this->render('AppBundle:Pokemon:show.html.twig', [
+            'pokemon'     => $pokemon,
             'delete_form' => $deleteForm->createView(),
-        );
+        ]);
     }
 
-    /**
-     * Displays a form to edit an existing Pokemon entity.
-     *
-     * @Route("/{id}/edit", name="pokemon_edit")
-     *
-     * @Method("GET")
-     * @Template()
-     */
-    public function editAction($id)
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('AppBundle:Pokemon')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Pokemon entity.');
-        }
-
-        $editForm = $this->createEditForm($entity);
-        $deleteForm = $this->createDeleteForm($id);
-
-        return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        );
-    }
-
-    /**
-     * Creates a form to edit a Pokemon entity.
-     *
-     * @param Pokemon $entity The entity
-     *
-     * @return \Symfony\Component\Form\Form The form
-     */
-    private function createEditForm(Pokemon $entity)
-    {
-        $form = $this->createForm(new PokemonType(), $entity, array(
-            'action' => $this->generateUrl('pokemon_update', array('id' => $entity->getId())),
-            'method' => 'PUT',
-        ));
-
-        $form->add('submit', 'submit', array('label' => 'Update'));
-
-        return $form;
-    }
     /**
      * Edits an existing Pokemon entity.
      *
-     * @Route("/{id}", name="pokemon_update")
+     * @Route("/update/{id}", name="pokemon_update")
      *
-     * @Method("PUT")
-     * @Template("AppBundle:Pokemon:edit.html.twig")
+     * @Method("GET|PUT")
      */
     public function updateAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('AppBundle:Pokemon')->find($id);
+        $pokemon = $em->getRepository('AppBundle:Pokemon')->find($id);
 
-        if (!$entity) {
+        if (!$pokemon) {
             throw $this->createNotFoundException('Unable to find Pokemon entity.');
         }
 
         $deleteForm = $this->createDeleteForm($id);
-        $editForm = $this->createEditForm($entity);
+
+        $editForm = $this->createForm(new PokemonType(), $pokemon, array(
+            'action' => $this->generateUrl('pokemon_update', array('id' => $pokemon->getId())),
+            'method' => 'PUT',
+        ));
+
+        $editForm->add('submit', 'submit', array('label' => 'Update'));
+
         $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
             $em->flush();
 
-            return $this->redirect($this->generateUrl('pokemon_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('pokemon_show', array('id' => $id)));
         }
 
-        return array(
-            'entity'      => $entity,
+        return $this->render('AppBundle:Pokemon:edit.html.twig', [
+            'pokemon'     => $pokemon,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
-        );
+        ]);
     }
+
     /**
      * Deletes a Pokemon entity.
      *
