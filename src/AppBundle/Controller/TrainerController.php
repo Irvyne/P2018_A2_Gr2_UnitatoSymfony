@@ -37,6 +37,7 @@ class TrainerController extends Controller
             'trainers' => $trainers,
         ]);
     }
+
     /**
      * Creates a new Trainer entity.
      *

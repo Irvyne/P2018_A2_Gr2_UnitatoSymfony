@@ -23,82 +23,53 @@ class TypeController extends Controller
      * @Route("/", name="type")
      *
      * @Method("GET")
-     * @Template()
      */
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('AppBundle:Type')->findAll();
+        $types = $em->getRepository('AppBundle:Type')->findAll();
 
-        return array(
-            'entities' => $entities,
-        );
+        return $this->render('AppBundle:Type:index.html.twig', [
+            'types' => $types,
+        ]);
     }
+
     /**
      * Creates a new Type entity.
      *
-     * @Route("/", name="type_create")
+     * @Route("/create", name="type_create")
+     * @Method("GET|POST")
      *
-     * @Method("POST")
-     * @Template("AppBundle:Type:new.html.twig")
+     * @param Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function createAction(Request $request)
     {
-        $entity = new Type();
-        $form = $this->createCreateForm($entity);
+        $type = new Type();
+
+        $form = $this->createForm(new TypeType(), $type, [
+            'action' => $this->generateUrl('type_create'),
+            'method' => 'POST',
+        ]);
+
+        $form->add('submit', 'submit', ['label' => 'Create']);
+
         $form->handleRequest($request);
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $em->persist($entity);
+            $em->persist($type);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('type_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('type_show', ['id' => $type->getId()]));
         }
 
-        return array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
-        );
-    }
-
-    /**
-     * Creates a form to create a Type entity.
-     *
-     * @param Type $entity The entity
-     *
-     * @return \Symfony\Component\Form\Form The form
-     */
-    private function createCreateForm(Type $entity)
-    {
-        $form = $this->createForm(new TypeType(), $entity, array(
-            'action' => $this->generateUrl('type_create'),
-            'method' => 'POST',
-        ));
-
-        $form->add('submit', 'submit', array('label' => 'Create'));
-
-        return $form;
-    }
-
-    /**
-     * Displays a form to create a new Type entity.
-     *
-     * @Route("/new", name="type_new")
-     *
-     * @Method("GET")
-     * @Template()
-     */
-    public function newAction()
-    {
-        $entity = new Type();
-        $form   = $this->createCreateForm($entity);
-
-        return array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
-        );
+        return $this->render('AppBundle:Type:new.html.twig', [
+            'type' => $type,
+            'form' => $form->createView(),
+        ]);
     }
 
     /**
@@ -107,105 +78,64 @@ class TypeController extends Controller
      * @Route("/{id}", name="type_show")
      *
      * @Method("GET")
-     * @Template()
      */
     public function showAction($id)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('AppBundle:Type')->find($id);
+        $type = $em->getRepository('AppBundle:Type')->find($id);
 
-        if (!$entity) {
+        if (!$type) {
             throw $this->createNotFoundException('Unable to find Type entity.');
         }
 
         $deleteForm = $this->createDeleteForm($id);
 
-        return array(
-            'entity'      => $entity,
+        return $this->render('AppBundle:Type:show.html.twig', [
+            'type'        => $type,
             'delete_form' => $deleteForm->createView(),
-        );
+        ]);
     }
 
-    /**
-     * Displays a form to edit an existing Type entity.
-     *
-     * @Route("/{id}/edit", name="type_edit")
-     *
-     * @Method("GET")
-     * @Template()
-     */
-    public function editAction($id)
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('AppBundle:Type')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Type entity.');
-        }
-
-        $editForm = $this->createEditForm($entity);
-        $deleteForm = $this->createDeleteForm($id);
-
-        return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        );
-    }
-
-    /**
-     * Creates a form to edit a Type entity.
-     *
-     * @param Type $entity The entity
-     *
-     * @return \Symfony\Component\Form\Form The form
-     */
-    private function createEditForm(Type $entity)
-    {
-        $form = $this->createForm(new TypeType(), $entity, array(
-            'action' => $this->generateUrl('type_update', array('id' => $entity->getId())),
-            'method' => 'PUT',
-        ));
-
-        $form->add('submit', 'submit', array('label' => 'Update'));
-
-        return $form;
-    }
     /**
      * Edits an existing Type entity.
      *
-     * @Route("/{id}", name="type_update")
+     * @Route("/update/{id}", name="type_update")
      *
-     * @Method("PUT")
-     * @Template("AppBundle:Type:edit.html.twig")
+     * @Method("GET|PUT")
      */
     public function updateAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('AppBundle:Type')->find($id);
+        $type = $em->getRepository('AppBundle:Type')->find($id);
 
-        if (!$entity) {
+        if (!$type) {
             throw $this->createNotFoundException('Unable to find Type entity.');
         }
 
         $deleteForm = $this->createDeleteForm($id);
-        $editForm = $this->createEditForm($entity);
+
+        $editForm = $this->createForm(new TypeType(), $type, [
+            'action' => $this->generateUrl('type_update', ['id' => $type->getId()]),
+            'method' => 'PUT',
+        ]);
+
+        $editForm->add('submit', 'submit', ['label' => 'Update']);
+
         $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
             $em->flush();
 
-            return $this->redirect($this->generateUrl('type_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('type_show', ['id' => $id]));
         }
 
-        return array(
-            'entity'      => $entity,
+        return $this->render('AppBundle:Type:edit.html.twig', [
+            'type'        => $type,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
-        );
+        ]);
     }
     /**
      * Deletes a Type entity.
@@ -244,9 +174,9 @@ class TypeController extends Controller
     private function createDeleteForm($id)
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('type_delete', array('id' => $id)))
+            ->setAction($this->generateUrl('type_delete', ['id' => $id]))
             ->setMethod('DELETE')
-            ->add('submit', 'submit', array('label' => 'Delete'))
+            ->add('submit', 'submit', ['label' => 'Delete'])
             ->getForm()
         ;
     }
