@@ -4,13 +4,8 @@ parameters:
 #    parameter_name: value
 
 services:
-    sonata.admin.post:
-        class: Acme\DemoBundle\Admin\PostAdmin
+    sonata.admin.pokemon:
+        class: AppBundle\Admin\PokemonAdmin
+        arguments: [~, AppBundle\Entity\Pokemon, ~]
         tags:
-            - { name: sonata.admin, manager_type: orm, group: "Content", label: "Post" }
-        arguments:
-            - ~
-            - Acme\DemoBundle\Entity\Post
-            - ~
-        calls:
-            - [ setTranslationDomain, [AcmeDemoBundle]]
+            - { name: sonata.admin, manager_type: orm, group: "Pokemon", label: "Pokemon" }
