@@ -8,7 +8,7 @@ use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
 
-class PokemonAdmin extends Admin
+class TrainerAdmin extends Admin
 {
     /**
      * Fields to be shown on create/edit forms
@@ -19,13 +19,10 @@ class PokemonAdmin extends Admin
     {
         $formMapper
             ->add('name')
-            ->add('hp')
-            ->add('level')
-            ->add('attack')
-            ->add('defense')
+            ->add('birthday')
+            ->add('sex')
+            ->add('picture')
             ->add('description')
-            ->add('types')
-            ->add('trainer')
         ;
     }
 
@@ -38,7 +35,7 @@ class PokemonAdmin extends Admin
     {
         $datagridMapper
             ->add('name')
-            ->add('level')
+            ->add('sex')
         ;
     }
 
@@ -52,10 +49,10 @@ class PokemonAdmin extends Admin
         $listMapper
             ->addIdentifier('id')
             ->add('name')
-            ->add('hp')
-            ->add('level')
-            ->add('attack')
-            ->add('defense')
+            ->add('birthday')
+            ->add('sex')
+            ->add('picture')
+            ->add('description')
         ;
     }
 
@@ -69,13 +66,10 @@ class PokemonAdmin extends Admin
         $showMapper
             ->add('id')
             ->add('name')
-            ->add('hp')
-            ->add('level')
-            ->add('attack')
-            ->add('defense')
+            ->add('birthday')
+            ->add('sex')
+            ->add('picture')
             ->add('description')
-            ->add('types')
-            ->add('trainer')
         ;
     }
 }
