@@ -12,4 +12,14 @@ use Doctrine\ORM\EntityRepository;
  */
 class PokemonRepository extends EntityRepository
 {
+    public function findCatchThemAll()
+    {
+        $qb = $this->createQueryBuilder('p');
+
+//        $qb->andWhere(
+//            $qb->expr()->like('p.name', '%a%')
+//        );
+
+        return $qb->getQuery()->getArrayResult();
+    }
 }
