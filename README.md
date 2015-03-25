@@ -9,6 +9,6 @@ http://www.grafikart.fr/tutoriels/cordova/apache-cordova-installation-432
 
 # To Do!
 
-https://sonata-project.org/bundles/admin/2-3/doc/reference/installation.html  
+Merge in ```src\AppBundle\Entity\PokemonRepository.php``` the two methods ```findCatchThemAll()``` and ```findCatchIt()```  
 
-https://sonata-project.org/bundles/doctrine-orm-admin/master/doc/reference/installation.html  
+I just need to have one method instead of two

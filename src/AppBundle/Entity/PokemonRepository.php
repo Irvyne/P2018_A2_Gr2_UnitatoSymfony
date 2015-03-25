@@ -2,7 +2,9 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\ORM\AbstractQuery;
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Query\Expr as Expr;
 
 /**
  * PokemonRepository.
@@ -16,10 +18,29 @@ class PokemonRepository extends EntityRepository
     {
         $qb = $this->createQueryBuilder('p');
 
-//        $qb->andWhere(
-//            $qb->expr()->like('p.name', '%a%')
-//        );
+        $qb
+            ->select('p, t')
+            ->join('p.types', 't', Expr\Join::WITH)
+        ;
+
+        $qb->orderBy('p.id', 'DESC');
 
         return $qb->getQuery()->getArrayResult();
+    }
+
+    public function findCatchIt($id)
+    {
+        $qb = $this->createQueryBuilder('p'); // After: $qb->select('p');
+
+        $qb
+            ->select('p, t')
+            ->join('p.types', 't', Expr\Join::WITH)
+            ->where('p.id = :id')
+            ->setParameters([
+                ':id' => $id,
+            ])
+        ;
+
+        return $qb->getQuery()->getSingleResult(AbstractQuery::HYDRATE_ARRAY);
     }
 }

@@ -32,4 +32,21 @@ class ApiController extends Controller
 
         return new JsonResponse($pokemons);
     }
+
+    /**
+     * @Route("/pokemon/{id}", name="api_one_pokemon", requirements={"id" = "\d+"})
+     */
+    public function onePokemonAction($id)
+    {
+        // Retrieve Doctrine Manager
+        $em = $this->getDoctrine()->getManager();
+
+        // Retrieve Entity Repository
+        $repo = $em->getRepository('AppBundle:Pokemon');
+
+        // Retrieve all Pokemon entities
+        $pokemon = $repo->findCatchIt($id);
+
+        return new JsonResponse($pokemon);
+    }
 }
