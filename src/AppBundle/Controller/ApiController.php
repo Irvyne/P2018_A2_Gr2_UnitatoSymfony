@@ -2,10 +2,13 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\TrainerRepository;
+use AppBundle\Entity\TypeRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Component\HttpFoundation\JsonResponse;
+use AppBundle\Entity\PokemonRepository;
 
 /**
  * Class ApiController
@@ -17,36 +20,56 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 class ApiController extends Controller
 {
     /**
-     * @Route("/pokemon", name="api_pokemon")
+     * @Route("/pokemon/{id}", name="api_pokemon", defaults={"id" = null}, requirements={"id" = "\d+"})
      */
-    public function pokemonAction()
+    public function pokemonAction($id)
     {
         // Retrieve Doctrine Manager
         $em = $this->getDoctrine()->getManager();
 
         // Retrieve Entity Repository
+        /** @var PokemonRepository $repo */
         $repo = $em->getRepository('AppBundle:Pokemon');
 
         // Retrieve all Pokemon entities
-        $pokemons = $repo->findCatchThemAll();
+        $pokemons = $repo->findCatchThemAll($id);
 
         return new JsonResponse($pokemons);
     }
 
     /**
-     * @Route("/pokemon/{id}", name="api_one_pokemon", requirements={"id" = "\d+"})
+     * @Route("/type/{id}", name="api_type", defaults={"id" = null}, requirements={"id" = "\d+"})
      */
-    public function onePokemonAction($id)
+    public function typeAction($id)
     {
         // Retrieve Doctrine Manager
         $em = $this->getDoctrine()->getManager();
 
         // Retrieve Entity Repository
-        $repo = $em->getRepository('AppBundle:Pokemon');
+        /** @var TypeRepository $repo */
+        $repo = $em->getRepository('AppBundle:Type');
 
         // Retrieve all Pokemon entities
-        $pokemon = $repo->findCatchIt($id);
+        $types = $repo->findCatchThemAll($id);
 
-        return new JsonResponse($pokemon);
+        return new JsonResponse($types);
+    }
+
+    /**
+     * @Route("/trainer/{id}", name="api_trainer", defaults={"id" = null}, requirements={"id" = "\d+"})
+     */
+    public function TrainerAction($id)
+    {
+        // Retrieve Doctrine Manager
+        $em = $this->getDoctrine()->getManager();
+
+        // Retrieve Entity Repository
+        /** @var TrainerRepository $repo */
+        $repo = $em->getRepository('AppBundle:Trainer');
+
+        // Retrieve all Pokemon entities
+        $trainers = $repo->findCatchThemAll($id);
+
+        return new JsonResponse($trainers);
     }
 }

@@ -11,4 +11,5 @@ http://www.grafikart.fr/tutoriels/cordova/apache-cordova-installation-432
 
 Merge in ```src\AppBundle\Entity\PokemonRepository.php``` the two methods ```findCatchThemAll()``` and ```findCatchIt()```  
 
-You just need to have one method instead of two
+You just need to have one method instead of two  
+

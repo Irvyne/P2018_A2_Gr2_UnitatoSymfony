@@ -39,6 +39,8 @@ class PokemonAdmin extends Admin
         $datagridMapper
             ->add('name')
             ->add('level')
+            ->add('types')
+            ->add('trainer')
         ;
     }
 
@@ -56,6 +58,8 @@ class PokemonAdmin extends Admin
             ->add('level')
             ->add('attack')
             ->add('defense')
+            ->add('types')
+            ->add('trainer')
         ;
     }
 

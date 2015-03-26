@@ -14,33 +14,29 @@ use Doctrine\ORM\Query\Expr as Expr;
  */
 class PokemonRepository extends EntityRepository
 {
-    public function findCatchThemAll()
+    public function findCatchThemAll($id = null)
     {
         $qb = $this->createQueryBuilder('p');
 
         $qb
-            ->select('p, t')
-            ->join('p.types', 't', Expr\Join::WITH)
+            ->select('p, t, tr')
+            ->leftJoin('p.types', 't', Expr\Join::WITH)
+            ->leftJoin('p.trainer', 'tr', Expr\Join::WITH)
+            ->orderBy('p.id', 'DESC')
         ;
 
-        $qb->orderBy('p.id', 'DESC');
+        if (null !== $id) {
+            $qb
+                ->where('p.id = :id')
+                ->setParameters([
+                    ':id' => $id,
+                ])
+            ;
+        }
 
-        return $qb->getQuery()->getArrayResult();
-    }
-
-    public function findCatchIt($id)
-    {
-        $qb = $this->createQueryBuilder('p'); // After: $qb->select('p');
-
-        $qb
-            ->select('p, t')
-            ->join('p.types', 't', Expr\Join::WITH)
-            ->where('p.id = :id')
-            ->setParameters([
-                ':id' => $id,
-            ])
+        return null === $id
+            ? $qb->getQuery()->getArrayResult()
+            : $qb->getQuery()->getSingleResult(AbstractQuery::HYDRATE_ARRAY)
         ;
-
-        return $qb->getQuery()->getSingleResult(AbstractQuery::HYDRATE_ARRAY);
     }
 }
